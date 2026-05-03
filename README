@@ -1,0 +1,73 @@
+# VitalWatch — Health Monitoring Dashboard
+
+A real-time health monitoring web app with live ECG simulation, vital sign tracking, and an alert engine. Built with vanilla HTML, CSS, and JavaScript — no frameworks, no dependencies.
+
+![screenshot](screenshot.png)
+
+## Features
+
+- Live vitals: Heart rate, SpO₂, Blood pressure, Temperature
+- Animated ECG trace (Lead II simulation)
+- Sparkline trend charts per vital
+- Auto alert log with severity levels (ok / warn / danger)
+- Risk badge that updates in real time
+- Pause/resume monitoring
+- Fully responsive (mobile + desktop)
+
+## Project structure
+
+```
+health-monitor/
+├── index.html   # App shell and layout
+├── style.css    # Dark clinical theme
+├── app.js       # Vitals engine, ECG, charts, alerts
+└── README.md
+```
+
+## Run locally
+
+Just open `index.html` in any browser — no build step needed.
+
+```bash
+# Or serve with Python
+python3 -m http.server 8080
+# Then open http://localhost:8080
+```
+
+## Deploy to GitHub Pages
+
+1. Create a new repo on GitHub (e.g. `health-monitor`)
+2. Push this project:
+
+```bash
+git init
+git add .
+git commit -m "Initial commit: VitalWatch health monitor"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/health-monitor.git
+git push -u origin main
+```
+
+3. Go to **Settings → Pages → Source → Deploy from branch → main / root**
+4. Your live URL will be: `https://YOUR_USERNAME.github.io/health-monitor/`
+
+## Extend it
+
+| Feature | How |
+|---|---|
+| Real device data | Replace `generateVitals()` in `app.js` with a WebSocket or BLE API call |
+| Patient records | Add a `patients.json` and a sidebar to switch patients |
+| Backend alerts | POST to a Node/FastAPI endpoint from `addAlert()` |
+| Historical charts | Swap sparklines for Chart.js with date-range controls |
+| Auth | Add a login screen before `<main>` renders |
+
+## Tech stack
+
+- HTML5 Canvas (ECG + sparklines)
+- CSS custom properties + Grid + Flexbox
+- Vanilla JS (no dependencies)
+- Google Fonts: Syne + DM Mono
+
+## License
+
+MIT

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>VitalWatch — Health Monitor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Vital<span>Watch</span></div>
+    <div class="status-badge">
+      <span class="pulse-dot"></span> Live monitoring
+    </div>
+    <div class="header-time" id="clock"></div>
+  </header>
+
+  <main>
+    <section class="patient-bar">
+      <div class="patient-info">
+        <div class="avatar">RK</div>
+        <div>
+          <div class="patient-name">Ravi Kumar</div>
+          <div class="patient-meta">ID #04821 · Ward 3B · Age 47</div>
+        </div>
+      </div>
+      <div class="risk-badge" id="riskBadge">Low risk</div>
+    </section>
+
+    <section class="vitals-grid">
+      <div class="vital-card" id="card-hr">
+        <div class="vital-label">Heart rate</div>
+        <div class="vital-value" id="hr-val">--</div>
+        <div class="vital-unit">bpm</div>
+        <canvas id="chart-hr" height="60"></canvas>
+        <div class="vital-range">Normal: 60–100</div>
+      </div>
+      <div class="vital-card" id="card-spo2">
+        <div class="vital-label">SpO₂</div>
+        <div class="vital-value" id="spo2-val">--</div>
+        <div class="vital-unit">%</div>
+        <canvas id="chart-spo2" height="60"></canvas>
+        <div class="vital-range">Normal: 95–100</div>
+      </div>
+      <div class="vital-card" id="card-bp">
+        <div class="vital-label">Blood pressure</div>
+        <div class="vital-value" id="bp-val">--</div>
+        <div class="vital-unit">mmHg</div>
+        <canvas id="chart-bp" height="60"></canvas>
+        <div class="vital-range">Normal: 90/60–120/80</div>
+      </div>
+      <div class="vital-card" id="card-temp">
+        <div class="vital-label">Temperature</div>
+        <div class="vital-value" id="temp-val">--</div>
+        <div class="vital-unit">°C</div>
+        <canvas id="chart-temp" height="60"></canvas>
+        <div class="vital-range">Normal: 36.1–37.2</div>
+      </div>
+    </section>
+
+    <section class="lower-grid">
+      <div class="ecg-panel">
+        <div class="panel-header">ECG — Lead II</div>
+        <canvas id="ecg-canvas" height="100"></canvas>
+      </div>
+
+      <div class="alerts-panel">
+        <div class="panel-header">Alert log</div>
+        <ul id="alert-list"></ul>
+      </div>
+    </section>
+
+    <section class="controls">
+      <button id="pauseBtn" onclick="togglePause()">Pause</button>
+      <button onclick="simulateAlert()">Simulate alert</button>
+      <button onclick="clearAlerts()">Clear log</button>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>

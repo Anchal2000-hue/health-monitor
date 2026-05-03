@@ -1,0 +1,255 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0a0d14;
+  --surface:  #111620;
+  --card:     #161c28;
+  --border:   #1e2840;
+  --accent:   #00e5c3;
+  --danger:   #ff4d6d;
+  --warn:     #ffb830;
+  --ok:       #00e5c3;
+  --text:     #e4eaf5;
+  --muted:    #5a6a8a;
+  --font-head: 'Syne', sans-serif;
+  --font-mono: 'DM Mono', monospace;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 18px 32px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.logo {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: var(--text);
+}
+.logo span { color: var(--accent); }
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(0,229,195,0.08);
+  border: 1px solid rgba(0,229,195,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  letter-spacing: 0.05em;
+}
+
+.pulse-dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: pulse 1.4s ease-in-out infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.4; transform: scale(0.7); }
+}
+
+.header-time {
+  margin-left: auto;
+  font-size: 13px;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+}
+
+main { padding: 28px 32px; display: flex; flex-direction: column; gap: 24px; }
+
+.patient-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 24px;
+}
+.patient-info { display: flex; align-items: center; gap: 14px; }
+.avatar {
+  width: 44px; height: 44px;
+  background: rgba(0,229,195,0.12);
+  border: 1px solid rgba(0,229,195,0.3);
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+}
+.patient-name {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+}
+.patient-meta { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+.risk-badge {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 16px;
+  border-radius: 20px;
+  border: 1px solid var(--ok);
+  color: var(--ok);
+  background: rgba(0,229,195,0.08);
+  transition: all 0.4s;
+}
+.risk-badge.warn { border-color: var(--warn); color: var(--warn); background: rgba(255,184,48,0.1); }
+.risk-badge.danger { border-color: var(--danger); color: var(--danger); background: rgba(255,77,109,0.1); }
+
+.vitals-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.vital-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 18px 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.vital-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--accent);
+  opacity: 0.5;
+  transition: opacity 0.3s;
+}
+.vital-card.alert { border-color: var(--danger); }
+.vital-card.alert::before { background: var(--danger); opacity: 1; }
+
+.vital-label {
+  font-size: 11px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+.vital-value {
+  font-family: var(--font-head);
+  font-size: 38px;
+  font-weight: 800;
+  line-height: 1;
+  margin: 6px 0 0;
+  color: var(--text);
+  transition: color 0.3s;
+}
+.vital-card.alert .vital-value { color: var(--danger); }
+.vital-unit { font-size: 11px; color: var(--muted); }
+canvas { margin-top: 10px; width: 100% !important; }
+.vital-range { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+.lower-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+}
+
+.ecg-panel, .alerts-panel {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+}
+.panel-header {
+  font-family: var(--font-head);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 14px;
+}
+
+#ecg-canvas { width: 100% !important; display: block; }
+
+.alerts-panel {
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+#alert-list {
+  list-style: none;
+  overflow-y: auto;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#alert-list::-webkit-scrollbar { width: 4px; }
+#alert-list::-webkit-scrollbar-track { background: transparent; }
+#alert-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+#alert-list li {
+  font-size: 11px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border-left: 3px solid;
+  animation: slideIn 0.3s ease;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+#alert-list li.ok     { border-color: var(--ok);     background: rgba(0,229,195,0.05); color: var(--ok); }
+#alert-list li.warn   { border-color: var(--warn);   background: rgba(255,184,48,0.05); color: var(--warn); }
+#alert-list li.danger { border-color: var(--danger); background: rgba(255,77,109,0.05); color: var(--danger); }
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+button {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s;
+  letter-spacing: 0.04em;
+}
+button:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,229,195,0.06);
+}
+button:active { transform: scale(0.97); }
+
+@media (max-width: 900px) {
+  .vitals-grid { grid-template-columns: repeat(2,1fr); }
+  .lower-grid  { grid-template-columns: 1fr; }
+}
+@media (max-width: 540px) {
+  main { padding: 16px; }
+  .vitals-grid { grid-template-columns: 1fr 1fr; }
+  header { padding: 14px 16px; }
+}
