@@ -9,75 +9,116 @@
 </head>
 <body>
 
-  <header>
-    <div class="logo">Vital<span>Watch</span></div>
-    <div class="status-badge">
-      <span class="pulse-dot"></span> Live monitoring
+  <!-- LOGIN SCREEN -->
+  <div id="login-screen">
+    <div class="login-box">
+      <div class="login-logo">Vital<span>Watch</span></div>
+      <div class="login-subtitle">Clinical Monitoring System</div>
+      <div class="login-error" id="login-error"></div>
+      <div class="field">
+        <label>Username</label>
+        <input type="text" id="login-user" placeholder="doctor / nurse / admin" autocomplete="off"
+          onkeydown="if(event.key==='Enter') doLogin()"/>
+      </div>
+      <div class="field">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="password: 1234"
+          onkeydown="if(event.key==='Enter') doLogin()"/>
+      </div>
+      <button class="login-btn" onclick="doLogin()">Sign in</button>
+      <div class="login-hint">
+        Credentials: <strong>doctor</strong> / <strong>nurse</strong> / <strong>admin</strong> — all use password <strong>1234</strong>
+      </div>
     </div>
-    <div class="header-time" id="clock"></div>
-  </header>
+  </div>
 
-  <main>
-    <section class="patient-bar">
-      <div class="patient-info">
-        <div class="avatar">RK</div>
-        <div>
-          <div class="patient-name">Ravi Kumar</div>
-          <div class="patient-meta">ID #04821 · Ward 3B · Age 47</div>
-        </div>
-      </div>
-      <div class="risk-badge" id="riskBadge">Low risk</div>
-    </section>
+  <!-- MAIN APP -->
+  <div id="app" style="display:none">
 
-    <section class="vitals-grid">
-      <div class="vital-card" id="card-hr">
-        <div class="vital-label">Heart rate</div>
-        <div class="vital-value" id="hr-val">--</div>
-        <div class="vital-unit">bpm</div>
-        <canvas id="chart-hr" height="60"></canvas>
-        <div class="vital-range">Normal: 60–100</div>
+    <header>
+      <div class="logo">Vital<span>Watch</span></div>
+      <div class="status-badge">
+        <span class="pulse-dot"></span> Live monitoring
       </div>
-      <div class="vital-card" id="card-spo2">
-        <div class="vital-label">SpO₂</div>
-        <div class="vital-value" id="spo2-val">--</div>
-        <div class="vital-unit">%</div>
-        <canvas id="chart-spo2" height="60"></canvas>
-        <div class="vital-range">Normal: 95–100</div>
+      <div class="header-time" id="clock"></div>
+      <div class="user-info">
+        <span id="logged-user"></span>
+        <button class="logout-btn" onclick="doLogout()">Sign out</button>
       </div>
-      <div class="vital-card" id="card-bp">
-        <div class="vital-label">Blood pressure</div>
-        <div class="vital-value" id="bp-val">--</div>
-        <div class="vital-unit">mmHg</div>
-        <canvas id="chart-bp" height="60"></canvas>
-        <div class="vital-range">Normal: 90/60–120/80</div>
-      </div>
-      <div class="vital-card" id="card-temp">
-        <div class="vital-label">Temperature</div>
-        <div class="vital-value" id="temp-val">--</div>
-        <div class="vital-unit">°C</div>
-        <canvas id="chart-temp" height="60"></canvas>
-        <div class="vital-range">Normal: 36.1–37.2</div>
-      </div>
-    </section>
+    </header>
 
-    <section class="lower-grid">
-      <div class="ecg-panel">
-        <div class="panel-header">ECG — Lead II</div>
-        <canvas id="ecg-canvas" height="100"></canvas>
-      </div>
+    <div class="layout">
 
-      <div class="alerts-panel">
-        <div class="panel-header">Alert log</div>
-        <ul id="alert-list"></ul>
-      </div>
-    </section>
+      <!-- PATIENT SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-title">Patients</div>
+        <ul id="patient-list"></ul>
+      </aside>
 
-    <section class="controls">
-      <button id="pauseBtn" onclick="togglePause()">Pause</button>
-      <button onclick="simulateAlert()">Simulate alert</button>
-      <button onclick="clearAlerts()">Clear log</button>
-    </section>
-  </main>
+      <!-- DASHBOARD -->
+      <main>
+        <section class="patient-bar">
+          <div class="patient-info">
+            <div class="avatar" id="patient-avatar"></div>
+            <div>
+              <div class="patient-name" id="patient-name"></div>
+              <div class="patient-meta" id="patient-meta"></div>
+            </div>
+          </div>
+          <div class="risk-badge" id="riskBadge">Low risk</div>
+        </section>
+
+        <section class="vitals-grid">
+          <div class="vital-card" id="card-hr">
+            <div class="vital-label">Heart rate</div>
+            <div class="vital-value" id="hr-val">--</div>
+            <div class="vital-unit">bpm</div>
+            <canvas id="chart-hr" height="60"></canvas>
+            <div class="vital-range">Normal: 60–100</div>
+          </div>
+          <div class="vital-card" id="card-spo2">
+            <div class="vital-label">SpO₂</div>
+            <div class="vital-value" id="spo2-val">--</div>
+            <div class="vital-unit">%</div>
+            <canvas id="chart-spo2" height="60"></canvas>
+            <div class="vital-range">Normal: 95–100</div>
+          </div>
+          <div class="vital-card" id="card-bp">
+            <div class="vital-label">Blood pressure</div>
+            <div class="vital-value" id="bp-val">--</div>
+            <div class="vital-unit">mmHg</div>
+            <canvas id="chart-bp" height="60"></canvas>
+            <div class="vital-range">Normal: 90/60–120/80</div>
+          </div>
+          <div class="vital-card" id="card-temp">
+            <div class="vital-label">Temperature</div>
+            <div class="vital-value" id="temp-val">--</div>
+            <div class="vital-unit">°C</div>
+            <canvas id="chart-temp" height="60"></canvas>
+            <div class="vital-range">Normal: 36.1–37.2</div>
+          </div>
+        </section>
+
+        <section class="lower-grid">
+          <div class="ecg-panel">
+            <div class="panel-header">ECG — Lead II</div>
+            <canvas id="ecg-canvas" height="100"></canvas>
+          </div>
+          <div class="alerts-panel">
+            <div class="panel-header">Alert log</div>
+            <ul id="alert-list"></ul>
+          </div>
+        </section>
+
+        <section class="controls">
+          <button id="pauseBtn" onclick="togglePause()">Pause</button>
+          <button onclick="simulateAlert()">Simulate alert</button>
+          <button onclick="clearAlerts()">Clear log</button>
+        </section>
+      </main>
+
+    </div>
+  </div>
 
   <script src="app.js"></script>
 </body>
